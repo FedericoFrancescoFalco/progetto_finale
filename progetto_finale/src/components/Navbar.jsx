@@ -6,7 +6,7 @@ const CustomNavbar = () => {
   return (
     <Navbar style={{ background: '#222831', padding: '10px' }} expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/" style={{ color: 'white', fontWeight: 'bold' }}>My App</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/" style={{ color: 'white', fontWeight: 'bold' }}>Università degli studi di Antani</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

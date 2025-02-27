@@ -18,7 +18,7 @@ const Home = () => {
           <Card.Title className="display-4">Benvenuto al Portale dell'Università</Card.Title>
           <Card.Text className="mt-3">
             Questo portale ti permette di accedere alle informazioni sui docenti e i progetti universitari.
-            Utilizza il menu di navigazione per esplorare le varie sezioni.
+            Utilizza il menu di navigazione per esplorare le sezioni.
           </Card.Text>
           <Button variant="primary">
             <Link to="/persona" style={{ textDecoration: 'none', color: 'white' }}>

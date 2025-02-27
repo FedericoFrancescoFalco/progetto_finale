@@ -1,54 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Spinner, Alert } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 
 const API_URL = 'http://localhost:8080/persone';
 
 const Persone = () => {
   const [persone, setPersone] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPersone = async () => {
       try {
         const response = await fetch(API_URL);
-        if (!response.ok) {
-          throw new Error('Errore nel recupero dei dati');
-        }
         const data = await response.json();
         setPersone(data);
       } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+        console.error('Errore nel recupero dei dati:', error);
       }
     };
     fetchPersone();
   }, []);
 
-  if (loading) {
-    return (
-      <Container className="mt-4">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Caricamento...</span>
-        </Spinner>
-      </Container>
-    );
-  }
-
-  if (error) {
-    return (
-      <Container className="mt-4">
-        <Alert variant="danger">Si è verificato un errore: {error}</Alert>
-      </Container>
-    );
-  }
-
   return (
     <Container className="mt-4">
-      <h1>Persone</h1>
-      <Table striped bordered hover>
-        <thead>
+      <h1 className="text-center mb-4" style={{ color: '#ff6f61' }}>Lista del Personale</h1>
+      <Table
+        striped
+        bordered
+        hover
+        style={{
+          borderRadius: '15px',
+          overflow: 'hidden',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <thead style={{ background: '#ff6f61', color: 'white' }}>
           <tr>
             <th>ID</th>
             <th>Nome</th>
@@ -64,7 +48,7 @@ const Persone = () => {
               <td>{persona.nome}</td>
               <td>{persona.cognome}</td>
               <td>{persona.posizione}</td>
-              <td>{persona.stipendio}</td>
+              <td>{persona.stipendio} €</td>
             </tr>
           ))}
         </tbody>
@@ -74,3 +58,4 @@ const Persone = () => {
 };
 
 export default Persone;
+

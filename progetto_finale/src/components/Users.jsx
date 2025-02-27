@@ -15,12 +15,21 @@ const Users = () => {
 
   return (
     <Container className="mt-4">
-      <h1>Users</h1>
-      <Table striped bordered hover>
-        <thead>
+      <h1 className="text-center mb-4" style={{ color: '#28a745' }}>Lista Utenti</h1>
+      <Table
+        striped
+        bordered
+        hover
+        style={{
+          borderRadius: '15px',
+          overflow: 'hidden',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <thead style={{ background: '#28a745', color: 'white' }}>
           <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th>Nome</th>
             <th>Email</th>
             <th>Username</th>
           </tr>

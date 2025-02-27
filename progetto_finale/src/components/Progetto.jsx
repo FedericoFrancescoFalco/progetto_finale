@@ -1,54 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table, Spinner, Alert } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 
 const API_URL = 'http://localhost:8080/progetto';
 
 const Progetto = () => {
-  const [progetti, setProgetti] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [progetto, setProgetto] = useState([]);
 
   useEffect(() => {
-    const fetchProgetti = async () => {
+    const fetchProgetto = async () => {
       try {
         const response = await fetch(API_URL);
-        if (!response.ok) {
-          throw new Error('Errore nel recupero dei dati');
-        }
         const data = await response.json();
-        setProgetti(data);
+        setProgetto(data);
       } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+        console.error('Errore nel recupero dei dati:', error);
       }
     };
-    fetchProgetti();
+    fetchProgetto();
   }, []);
-
-  if (loading) {
-    return (
-      <Container className="mt-4 text-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Caricamento...</span>
-        </Spinner>
-      </Container>
-    );
-  }
-
-  if (error) {
-    return (
-      <Container className="mt-4">
-        <Alert variant="danger">Si è verificato un errore: {error}</Alert>
-      </Container>
-    );
-  }
 
   return (
     <Container className="mt-4">
-      <h1>Progetti</h1>
-      <Table striped bordered hover>
-        <thead>
+      <h1 className="text-center mb-4" style={{ color: '#0077b6' }}>Elenco Progetti</h1>
+      <Table
+        striped
+        bordered
+        hover
+        style={{
+          borderRadius: '15px',
+          overflow: 'hidden',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <thead style={{ background: '#0077b6', color: 'white' }}>
           <tr>
             <th>ID</th>
             <th>Nome</th>
@@ -58,13 +42,13 @@ const Progetto = () => {
           </tr>
         </thead>
         <tbody>
-          {progetti.map(progetto => (
+          {progetto.map(progetto => (
             <tr key={progetto.id}>
               <td>{progetto.id}</td>
               <td>{progetto.nome}</td>
               <td>{progetto.inizio}</td>
               <td>{progetto.fine}</td>
-              <td>{progetto.budget}</td>
+              <td>{progetto.budget} €</td>
             </tr>
           ))}
         </tbody>
@@ -74,3 +58,4 @@ const Progetto = () => {
 };
 
 export default Progetto;
+

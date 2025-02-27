@@ -9,7 +9,7 @@ const Home = () => {
         <Card.Body>
           <Card.Title className="display-4">Benvenuto al Portale dell'Università</Card.Title>
           <Card.Text className="mt-3">
-            Questo portale ti permette di accedere alle informazioni sui corsi, i docenti e i progetti universitari.
+            Questo portale ti permette di accedere alle informazioni sui docenti e i progetti universitari.
             Utilizza il menu di navigazione per esplorare le varie sezioni.
           </Card.Text>
           <Button variant="primary">

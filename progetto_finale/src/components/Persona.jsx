@@ -1,23 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table } from 'react-bootstrap';
+import { Container, Table, Spinner, Alert } from 'react-bootstrap';
 
 const API_URL = 'http://localhost:8080/persone';
 
 const Persone = () => {
   const [persone, setPersone] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPersone = async () => {
       try {
         const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error('Errore nel recupero dei dati');
+        }
         const data = await response.json();
         setPersone(data);
       } catch (error) {
-        console.error('Errore nel recupero dei dati:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     fetchPersone();
   }, []);
+
+  if (loading) {
+    return (
+      <Container className="mt-4">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Caricamento...</span>
+        </Spinner>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="mt-4">
+        <Alert variant="danger">Si è verificato un errore: {error}</Alert>
+      </Container>
+    );
+  }
 
   return (
     <Container className="mt-4">

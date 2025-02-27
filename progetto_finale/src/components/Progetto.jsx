@@ -1,27 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table } from 'react-bootstrap';
+import { Container, Table, Spinner, Alert } from 'react-bootstrap';
 
 const API_URL = 'http://localhost:8080/progetto';
 
 const Progetto = () => {
-  const [progetto, setprogetto] = useState([]);
+  const [progetti, setProgetti] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchprogetto = async () => {
+    const fetchProgetti = async () => {
       try {
         const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error('Errore nel recupero dei dati');
+        }
         const data = await response.json();
-        setprogetto(data);
+        setProgetti(data);
       } catch (error) {
-        console.error('Errore nel recupero dei dati:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchprogetto();
+    fetchProgetti();
   }, []);
+
+  if (loading) {
+    return (
+      <Container className="mt-4 text-center">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Caricamento...</span>
+        </Spinner>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="mt-4">
+        <Alert variant="danger">Si è verificato un errore: {error}</Alert>
+      </Container>
+    );
+  }
 
   return (
     <Container className="mt-4">
-      <h1>progetto</h1>
+      <h1>Progetti</h1>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -33,7 +58,7 @@ const Progetto = () => {
           </tr>
         </thead>
         <tbody>
-          {progetto.map(progetto => (
+          {progetti.map(progetto => (
             <tr key={progetto.id}>
               <td>{progetto.id}</td>
               <td>{progetto.nome}</td>
